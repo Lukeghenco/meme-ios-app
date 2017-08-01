@@ -22,17 +22,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5y9-tc-xP7">
-                                <rect key="frame" x="67" y="213.5" width="240" height="240"/>
+                                <rect key="frame" x="27" y="173.5" width="320" height="320"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="Kmf-kK-p4P"/>
-                                    <constraint firstAttribute="width" constant="240" id="iU1-Gt-Y1k"/>
+                                    <constraint firstAttribute="height" constant="320" id="Kmf-kK-p4P"/>
+                                    <constraint firstAttribute="width" constant="320" id="iU1-Gt-Y1k"/>
                                 </constraints>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJL-Mh-WdA">
-                                <rect key="frame" x="0.0" y="613.5" width="375" height="53.5"/>
+                                <rect key="frame" x="0.0" y="633.5" width="375" height="33.5"/>
                                 <items>
-                                    <barButtonItem systemItem="camera" id="GVB-8H-L4f"/>
-                                    <barButtonItem title="Pick" id="ndQ-zF-OYH">
+                                    <barButtonItem systemItem="camera" id="GVB-8H-L4f">
+                                        <connections>
+                                            <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="8DJ-1B-g2f"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Pick" style="plain" id="ndQ-zF-OYH">
+                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="15"/>
                                         <connections>
                                             <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="oaO-ex-TvX"/>
                                         </connections>
@@ -45,12 +50,15 @@
                             <constraint firstItem="cJL-Mh-WdA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="Niz-cX-yCu"/>
                             <constraint firstItem="5y9-tc-xP7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wfj-ZQ-5tR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cJL-Mh-WdA" secondAttribute="bottom" id="d5b-HL-oBw"/>
-                            <constraint firstItem="cJL-Mh-WdA" firstAttribute="top" secondItem="5y9-tc-xP7" secondAttribute="bottom" constant="160" id="vsl-xR-C8z"/>
+                            <constraint firstItem="cJL-Mh-WdA" firstAttribute="top" secondItem="5y9-tc-xP7" secondAttribute="bottom" constant="140" id="vsl-xR-C8z"/>
                             <constraint firstItem="5y9-tc-xP7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="y1p-5d-9wb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cJL-Mh-WdA" secondAttribute="trailing" constant="-16" id="yKU-gV-BDM"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="cameraButton" destination="GVB-8H-L4f" id="ADQ-2n-zVB"/>
                         <outlet property="imagePickerView" destination="5y9-tc-xP7" id="Qdq-vz-wbP"/>
                     </connections>
                 </viewController>
