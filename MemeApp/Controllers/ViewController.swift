@@ -15,6 +15,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     // MARK: - Properties
     let defaultText = "Click To Edit Text"
@@ -25,6 +27,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         self.topTextField.delegate = self
         self.bottomTextField.delegate = self
+        self.shareButton.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,13 +57,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     // MARK: - Save Meme
-    func save() {
+    func createMeme() {
         let meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
     }
     
     func generateMemedImage() -> UIImage {
         
-        // TODO: Hide Toolbar and Navbar
+        // Hide toolbar and navbar
         self.navigationController?.toolbar.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
         
@@ -70,7 +73,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        // TODO: Show Toolbar and Navbar
+        // Show toolbar and navbar
         self.navigationController?.toolbar.isHidden = false
         self.navigationController?.navigationBar.isHidden = false
         
@@ -83,6 +86,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             print(image)
             self.imagePickerView.image = image
+            self.shareButton.isEnabled = true
             picker.dismiss(animated: true, completion: nil)
         }
     }
@@ -139,8 +143,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePickerController.delegate = self
         imagePickerController.sourceType = .camera
         self.present(imagePickerController, animated: true, completion: nil)
+        self.shareButton.isEnabled = true
     }
     
+    @IBAction func shareButtonPressed(_ sender: Any) {
+        let memedImage = generateMemedImage()
+        let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        activityController.completionWithItemsHandler = { activity, success, items, error in
+            
+            self.createMeme()
+            self.dismiss(animated: true, completion: nil)
+        }
+        self.present(activityController, animated: true, completion: nil)
+    }
     
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        self.imagePickerView.image = nil
+        self.topTextField.text = self.defaultText
+        self.bottomTextField.text = self.defaultText
+        self.view.endEditing(true)
+    }
 }
 
